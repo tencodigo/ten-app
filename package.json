@@ -1,6 +1,6 @@
 {
   "name": "ten-app",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "main": "src/main.js",
   "description": "Framework to control application and user settings.",
   "license": "MIT",

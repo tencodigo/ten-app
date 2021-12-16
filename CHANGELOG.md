@@ -1,3 +1,12 @@
+## [0.3.1](https://github.com/tencodigo/ten-locale/compare/v0.3.0...v0.3.1) (2021-12-16)
+
+
+### Bug Fixes
+
+* publish ([be2e779](https://github.com/tencodigo/ten-locale/commit/be2e7793130e6fff2051d067446eb1e8671777f7))
+
+
+
 # [0.3.0](https://github.com/tencodigo/ten-locale/compare/v0.2.0...v0.3.0) (2021-12-16)
 
 
