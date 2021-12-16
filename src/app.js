@@ -1,5 +1,5 @@
 const _get = require('lodash/get');
-const _mergeDash = require('lodash/mergeWith');
+/*const _mergeDash = require('lodash/mergeWith');
 const _assign = require('lodash/assign');
 const _clone = require('lodash/cloneDeep');
 const _merge = function (dest,src,srcIndex,all) {
@@ -13,7 +13,7 @@ const _merge = function (dest,src,srcIndex,all) {
     }
     return undefined;
   });
-};
+};*/
 
 
 class tenApp {
@@ -28,41 +28,41 @@ class tenApp {
   }
 
   get(name,def) {
-    return _get(this,_settins,name,def);
+    return _get(this._settings,name,def);
   }
 
   replace(str,hash) {
-    return this._replace(str,hash)
+    return this._replace(str,hash);
   }
 
   setup(options, isDefault) {
     if(options) {
       if(options["~settings"]) {
-        this.setup({"app":options["~settings"]});
+        this.setup({"settings":options["~settings"]},true);
       }
       if(options.settings) {
         Object.keys(options.settings).forEach((key)=> {
-          this.set(options.settings[key],key,isDefault);
+          this.set(key, options.settings[key],isDefault);
         })
       }
     }
+    return this;
   }
 
-  set(settings, isDefault) {
+  set(key,value,isDefault) {
     if(isDefault) {
-      _assign(this._defaults,_clone(settings));
-      _merge(this._settings,settings);
-    } else {
-      _assign(this._settings,settings);
+      this._defaults[key]=value;
+      if(this._settings[key]===undefined) this._settings[key]=value;
     }
-    _merge(this._locales[localeCode],_clone(settings));
+    this._settings[key]=value;
+    return this;
   }
 
   _replace(str, hash) {
-    hash = hash || tenApp.instance._settings;
+    hash = hash || this._settings;
     let typ = typeof str;
     if (typ === 'string'){
-      let keys = str.match(/\{+(\w*)}+/g);
+      let keys = str.match(/{+([a-zA-Z0-9\.\[\]]*)}+/g);
       if (keys === undefined || keys===null) return str;
 
       for (let i = 0; i < keys.length; i++){
@@ -70,7 +70,7 @@ class tenApp {
         let name = key.replace(/[{}]/g, '');
         if (name === undefined || name === '') continue;
 
-        let value = this._get(name,null,true, hash);
+        let value = _get(hash,name,undefined);
         if (value === undefined) continue;
         let re = new RegExp('\\{' + name + '\\}', 'g');
         str = str.replace(re, value);

@@ -1,10 +1,10 @@
 const __app = require('./app.js').default;
 
 export default {
-  install: function(Vue,options,isDefault) {
-    if(Vue.provide) Vue.provide('$l',__app);
-    else Object.defineProperty(Vue.prototype, '$l', { value:__app });
-
-    __app.setup(options, isDefault);
+  install: (app, options) => {
+    if(options) __app.setup(options);
+    app.config.globalProperties.$a = __app;
+    app.$a = __app;
+    app.provide('$a',__app);
   }
 }
