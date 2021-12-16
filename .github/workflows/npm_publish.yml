@@ -11,6 +11,10 @@ jobs:
         with:
           node-version: 12
           registry-url: https://registry.npmjs.org/
+      - name: tes5
+        run: |
+          npm install
+          mpm run test:unit
       - name: Conventional Changelog Action
         uses: cdotyone/conventional-changelog-action@v3.8.2
         with:
